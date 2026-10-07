@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* A clear, consistent focus ring for keyboard users everywhere */
+  :focus-visible {
+    outline: 3px solid #1C1F2A;
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background: #FFD23F;
+    color: #1C1F2A;
+  }
+}
