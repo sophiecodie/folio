@@ -68,34 +68,36 @@ export const LEAN_NOTE =
 
 /**
  * Every source in one place. Lean ratings are rough, editable estimates.
- * Feed URLs get added and verified in Phase 2.
+ * Sources with a feedUrl are read as RSS/Atom by lib/feeds.ts. arXiv, medRxiv,
+ * and bioRxiv have their own APIs, so they are fetched separately there.
+ * AP News and Reuters no longer publish public RSS feeds, so they have none.
  */
 export const SOURCES: Source[] = [
   // News
-  { name: "The Guardian", section: "news", lean: "left" },
-  { name: "The New York Times", section: "news", lean: "lean-left" },
-  { name: "The Washington Post", section: "news", lean: "lean-left" },
-  { name: "NPR", section: "news", lean: "lean-left" },
+  { name: "The Guardian", section: "news", lean: "left", feedUrl: "https://www.theguardian.com/us-news/rss" },
+  { name: "The New York Times", section: "news", lean: "lean-left", feedUrl: "https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml" },
+  { name: "The Washington Post", section: "news", lean: "lean-left", feedUrl: "https://feeds.washingtonpost.com/rss/national" },
+  { name: "NPR", section: "news", lean: "lean-left", feedUrl: "https://feeds.npr.org/1001/rss.xml" },
   { name: "AP News", section: "news", lean: "lean-left" },
   { name: "Reuters", section: "news", lean: "center" },
-  { name: "BBC News", section: "news", lean: "center" },
-  { name: "The Hill", section: "news", lean: "center" },
-  { name: "The Wall Street Journal", section: "news", lean: "center" },
-  { name: "New York Post", section: "news", lean: "lean-right" },
-  { name: "Fox News", section: "news", lean: "right" },
-  { name: "National Review", section: "news", lean: "right" },
+  { name: "BBC News", section: "news", lean: "center", feedUrl: "https://feeds.bbci.co.uk/news/rss.xml" },
+  { name: "The Hill", section: "news", lean: "center", feedUrl: "https://thehill.com/news/feed/" },
+  { name: "The Wall Street Journal", section: "news", lean: "center", feedUrl: "https://feeds.content.dowjones.io/public/rss/RSSUSnews" },
+  { name: "New York Post", section: "news", lean: "lean-right", feedUrl: "https://nypost.com/feed/" },
+  { name: "Fox News", section: "news", lean: "right", feedUrl: "https://moxie.foxnews.com/google-publisher/latest.xml" },
+  { name: "National Review", section: "news", lean: "right", feedUrl: "https://www.nationalreview.com/feed/" },
   // Science
   { name: "arXiv", section: "science" },
   { name: "medRxiv", section: "science", subsection: "Health" },
   { name: "bioRxiv", section: "science", subsection: "Health" },
-  { name: "Ars Technica", section: "science", subsection: "Tech" },
-  { name: "The Verge", section: "science", subsection: "Tech" },
-  { name: "MIT Technology Review", section: "science", subsection: "Tech" },
+  { name: "Ars Technica", section: "science", subsection: "Tech", feedUrl: "https://feeds.arstechnica.com/arstechnica/index" },
+  { name: "The Verge", section: "science", subsection: "Tech", feedUrl: "https://www.theverge.com/rss/index.xml" },
+  { name: "MIT Technology Review", section: "science", subsection: "Tech", feedUrl: "https://www.technologyreview.com/feed/" },
   // Culture
-  { name: "Variety", section: "culture" },
-  { name: "Rolling Stone", section: "culture", subsection: "Music" },
-  { name: "Pitchfork", section: "culture", subsection: "Music" },
-  { name: "Book Riot", section: "culture", subsection: "Books" },
+  { name: "Variety", section: "culture", feedUrl: "https://variety.com/feed/" },
+  { name: "Rolling Stone", section: "culture", subsection: "Music", feedUrl: "https://www.rollingstone.com/feed/" },
+  { name: "Pitchfork", section: "culture", subsection: "Music", feedUrl: "https://pitchfork.com/feed/feed-news/rss" },
+  { name: "Book Riot", section: "culture", subsection: "Books", feedUrl: "https://bookriot.com/feed/" },
 ];
 
 export function leanOf(sourceName: string): Lean | undefined {

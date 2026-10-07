@@ -9,8 +9,23 @@ import SpectrumBar from "./SpectrumBar";
 import PinButton from "./PinButton";
 
 // Cover shapes. Mixing them (and some cards with no cover) is what gives the
-// masonry grid its staggered Pinterest look.
+// masonry grid its staggered Pinterest look. Photos lean tall, like Pinterest;
+// drawn covers stay short so text-only stories don't take over the page.
+const IMAGE_SHAPES = [
+  "aspect-[3/4]",
+  "aspect-[4/5]",
+  "aspect-square",
+  "aspect-[2/3]",
+  "aspect-[4/3]",
+  "aspect-[5/6]",
+] as const;
 const COVER_SHAPES = [null, "aspect-[4/3]", "aspect-square", "aspect-[16/9]"] as const;
+
+/** Picks a stable cover shape for an item, or null for no cover. */
+export function coverShape(item: FeedItem): string | null {
+  const h = hash(item.id);
+  return item.imageUrl ? IMAGE_SHAPES[h % IMAGE_SHAPES.length] : COVER_SHAPES[h % COVER_SHAPES.length];
+}
 
 type Props = {
   item: FeedItem;
@@ -20,7 +35,7 @@ type Props = {
 
 export default function FeedCard({ item, index, onOpen }: Props) {
   const section = SECTIONS[item.section];
-  const shape = item.imageUrl ? "aspect-[4/3]" : COVER_SHAPES[hash(item.id) % COVER_SHAPES.length];
+  const shape = coverShape(item);
 
   return (
     <motion.article

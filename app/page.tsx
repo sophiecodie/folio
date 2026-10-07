@@ -1,13 +1,15 @@
 import Link from "next/link";
 import SectionFeed from "@/components/SectionFeed";
 import SourceTicker from "@/components/SourceTicker";
-import { mixedFeed } from "@/lib/mockData";
+import { getMixed } from "@/lib/feeds";
 import { SECTIONS } from "@/lib/sources";
 
-// This is a Server Component (no "use client"), so it runs on the server and
-// sends finished HTML. In Phase 2 it will fetch live feeds right here.
-export default function HomePage() {
-  const items = mixedFeed();
+export const revalidate = 1800; // seconds; Next needs a plain number here (matches REVALIDATE_SECONDS)
+
+// This is a Server Component (no "use client"), so it runs on the server,
+// fetches the live feeds, and sends finished HTML.
+export default async function HomePage() {
+  const { items } = await getMixed();
   const sectionOptions = (Object.keys(SECTIONS) as (keyof typeof SECTIONS)[]).map((key) => ({
     value: key,
     label: SECTIONS[key].label,

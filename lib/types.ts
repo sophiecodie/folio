@@ -29,5 +29,5 @@ export type Source = {
   section: Section;
   subsection?: string;
   lean?: Lean;
-  feedUrl?: string; // filled in during Phase 2
+  feedUrl?: string; // RSS or Atom feed, read by lib/feeds.ts
 };
