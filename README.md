@@ -7,4 +7,4 @@ Built with Next.js 14 (App Router), React 18, TypeScript, Tailwind CSS, Framer M
 and next/font. Deploys to Vercel.
 
 
-# folio
+
